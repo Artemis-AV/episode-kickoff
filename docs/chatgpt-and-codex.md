@@ -28,7 +28,7 @@ Codex works in the episode folder on your Mac and uses the Codex usage included 
    npm install -g @openai/codex                           # or npm
    ```
 
-2. Run `codex`, choose **Sign in with ChatGPT**, and finish signing in in your browser. Then type `/quit` to leave Codex.
+2. Run `codex`, choose **Sign in with ChatGPT**, and finish signing in in your browser. Then type `/exit` to leave Codex.
 3. Check that Codex runs on its own, the way Episode Kickoff runs it:
 
    ```sh
