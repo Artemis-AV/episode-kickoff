@@ -39,7 +39,7 @@ Codex works in the episode folder on your Mac and uses the Codex usage included 
 
 ### 2. Optional: let Codex work in DaVinci Resolve
 
-Codex works in Resolve through an MCP server for Resolve: a small program that gives Codex tools to read and change Resolve projects. [davinci-resolve-mcp](https://github.com/samuelgursky/davinci-resolve-mcp) is a popular open-source one, and its installer can add it to Codex for you. Other Resolve MCP servers work too.
+Codex works in Resolve through an MCP server for Resolve: a small program that gives Codex tools to read and change Resolve projects. DaVinci Resolve Studio 21.1 and later comes with one: in Resolve, choose **File → Setup AI Assistants** and set up Codex instead of step 2. For older versions, [davinci-resolve-mcp](https://github.com/samuelgursky/davinci-resolve-mcp) is a popular open-source one, and its installer can add it to Codex for you. Other Resolve MCP servers work too.
 
 1. In DaVinci Resolve Studio, open **Preferences → System → General** and set **External scripting using** to **Local**.
 2. Install the server by following its instructions. If they don't add it to Codex, add it yourself, using the command from its instructions that starts the server:
@@ -76,15 +76,17 @@ Resolve has to be open while Codex works in it. Episode Kickoff opens the new pr
 
    The extra part lets Codex use the server's tools without asking first. Nobody is there to say yes during an automation, so Codex would otherwise cancel any tool call that needs your OK. It applies only to this automation: when you use Codex yourself, it still asks.
 
+   If the server's name has a space in it, such as `DaVinci Resolve`, the extra part doesn't work. Use the first command, then open `~/.codex/config.toml` in a plain-text editor, find the server's section, and add the line `default_tools_approval_mode = "approve"` to it. That way Codex doesn't ask first in your own sessions either.
+
 3. Under **Instructions**, write what Codex should do. See the [examples](#example-instructions).
 4. Under **Runs for**, tick your shows. Leave **Only after a run with no problems** and **Only once per episode** on.
-5. Click **Test**. Codex gets a test message saying there's nothing to work on, so it just replies. When the test says it started or finished, **Open Log** shows Codex's reply. Then click **Save**.
+5. Click **Test**. Codex gets a test message saying there's nothing to work on, so it just replies, and its reply shows next to **Test**. **Show Activity** shows each step it took. Then click **Save**.
 
 ### After each episode
 
 - When a run for one of those shows finishes, Episode Kickoff starts Codex in the episode folder with your instructions and the episode's details.
-- Codex works in the background, even if you quit Episode Kickoff, and your Mac doesn't go to sleep on its own until Codex is done. If Episode Kickoff is still open when Codex finishes, you get a notification.
-- In the main window, **Open Log** next to **Automations…** opens Codex's log (if more than one automation ran, the button is **Open Results…**). Codex's answer is near the end.
+- Codex works in the background, even if you quit Episode Kickoff, and your Mac doesn't go to sleep on its own until Codex is done. If Episode Kickoff is still open when Codex finishes, you get a notification with the first line of its answer.
+- In the main window, **Show Activity** next to **Automations…** shows what Codex is doing while it works: each command it runs, each file it changes, each Resolve tool it uses, and its answer at the end (if more than one automation ran, the button is **Open Results…**). **File → Automation Activity…** shows it too, and **Stop** ends a run that's going the wrong way.
 - To see what Codex did and ask for more, open its session in Terminal. Click **Open Episode Folder**, type `cd ` (with a space) in Terminal, drag the episode folder from Finder into the Terminal window, and press Return. Then run:
 
   ```sh
