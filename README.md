@@ -194,7 +194,7 @@ Commands and Shortcuts run in the background, even after you quit Episode Kickof
 - **Stop** ends a run that's going the wrong way. What it already did stays done.
 - **Show Raw Log** opens the full log, and **Open Episode Folder** shows the episode in Finder.
 
-This needs Episode Kickoff 1.4.0 or later.
+This needs Episode Kickoff 0.0.7 or later.
 
 Tokens and other secrets are kept in your Mac's Keychain. Automations stay on your Mac: they're never exported with presets, so a preset someone sends you can't bring a command with it.
 
@@ -227,6 +227,10 @@ You can check any time with **Check for Updates** on the About tab or **Help →
 > [!IMPORTANT]
 > Updates only work when Episode Kickoff is in your Applications folder, not when it's opened straight from the installer disk.
 
+### If the About tab shows 1.x
+
+Versions were renumbered: 1.0.0 to 1.3.5 are now 0.0.1 to 0.0.6, and 0.0.7 comes after them. A copy that shows 1.x counts itself as newer than 0.0.7, so it won't offer the update. Install the [latest version](https://github.com/Artemis-AV/episode-kickoff/releases/latest) once, the same way as the first time (see [Install](#install)), and choose **Replace** when asked. Your shows, keys and sign-in stay as they are. macOS may ask you to allow the app again (Install, step 3). After that, updates arrive as usual.
+
 ## Where your data lives
 
 | What | Where |
@@ -252,6 +256,7 @@ Episode Kickoff has no account and no analytics. It connects to Riverside to get
 
 - **An automation didn't start, or stopped early**: the log in the main window says why, **File → Automation Activity…** shows what a command did, and **Test** in **File → Automations…** tries it on its own. If a command isn't found, use its full path (in Terminal, `which claude` shows it). Claude and ChatGPT limit how many runs they start in an hour.
 - **An update didn't install**: look in `~/Library/Logs/Episode Kickoff/update.log`, and make sure the app is in your Applications folder.
+- **The About tab shows 1.x and no update appears**: versions were renumbered, so install the latest version once. See [If the About tab shows 1.x](#if-the-about-tab-shows-1x).
 - **Logs**: **File → Open Logs Folder**. **Help → Show detailed log** adds more detail to the log in the window.
 
 ## Command line
