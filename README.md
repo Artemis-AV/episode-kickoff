@@ -130,8 +130,8 @@ Using ChatGPT or Codex? [ChatGPT and Codex](docs/chatgpt-and-codex.md) walks thr
 
    | Type | What it starts | What you need |
    |---|---|---|
-   | **Claude scheduled task** | A [scheduled task](https://claude.ai/code/routines) in Claude | A Claude Pro, Max, Team or Enterprise plan. In the task, choose **⋯ → Edit**, click **+** under **Triggers** and choose **API**. Copy the **Fire URL**, then click **Generate token** and copy the token (it's shown once). |
-   | **ChatGPT workspace agent** | A ChatGPT workspace agent | A ChatGPT Business, Enterprise or Edu workspace. Add an **API channel** to the agent and copy its trigger ID (`agtch_…`), and make an access token in **ChatGPT Admin → Access tokens** with the **Workspace Agents** scope. |
+   | **Claude scheduled task** | A [scheduled task](https://claude.ai/code/routines) in Claude that runs in the cloud | A Claude Pro, Max, Team or Enterprise plan. In the task, choose **⋯ → Edit**, click **+** under **Triggers** and choose **API**. Copy the **Fire URL**, then click **Generate token** and copy the token (it's shown once). |
+   | **ChatGPT workspace agent** | A ChatGPT workspace agent, in the cloud | A ChatGPT Business, Enterprise or Edu workspace. Add an **API channel** to the agent and copy its trigger ID (`agtch_…`), and make an access token in **ChatGPT Admin → Access tokens** with the **Workspace Agents** scope. |
    | **Claude Code**, **Codex** or **Gemini CLI** | That command-line agent on your Mac, working in the episode folder | The agent installed and signed in. Codex works with a ChatGPT plan. |
    | **Other command** | Any command or script on your Mac | The command |
    | **Shortcut** | A shortcut from the Shortcuts app | The shortcut. It can use the ChatGPT app's **Ask ChatGPT** action, Apple Intelligence, or any other app's actions. |
@@ -140,6 +140,9 @@ Using ChatGPT or Codex? [ChatGPT and Codex](docs/chatgpt-and-codex.md) walks thr
 2. Fill in what it asks for, and write what the agent should do under **Instructions**.
 3. Click **Test**. The agent gets a test message saying there's nothing to work on, so it just replies. For commands and Shortcuts, **Open Log** shows what happened.
 4. Under **Runs for**, tick the shows that should use it, then click **Save**. You can also change this in **Edit Presets… → Automations**.
+
+> [!IMPORTANT]
+> Claude and ChatGPT only let other apps start tasks that run in the cloud, so those tasks can't use apps on your Mac, such as DaVinci Resolve. A Claude scheduled task set to run on your computer has no API trigger to add. For work in Resolve, use a command-line agent on your Mac, such as Claude Code.
 
 > [!TIP]
 > A Claude scheduled task keeps its own instructions in Claude, so **Instructions** in Episode Kickoff is optional for it. **Copy Starter Instructions** gives you instructions to paste into the task: they explain the episode details it will receive and how to answer a test.
