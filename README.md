@@ -105,7 +105,7 @@ Click **Check Setup…** to see what's working: the app, browser support, your A
 6. If the show has [automations](#automations), they're listed under **Automations**. Untick **When it's done, start…** to skip them this time.
 7. Click **Start** (⌘R).
 
-Each file shows its progress, and the steps tick off: **Folders**, **Riverside tracks**, **Resolve project** and **Automations**. When it's done you get a notification, and Resolve opens the new project with the tracks in its **Raw** bin. **Open Episode Folder** shows the folder in Finder, and the button next to **Automations…** opens what the automations started, such as the Claude or ChatGPT conversation, or a command's log.
+Each file shows its progress, and the steps tick off: **Folders**, **Riverside tracks**, **Resolve project** and **Automations**. When it's done you get a notification, and Resolve opens the new project with the tracks in its **Raw** bin. **Open Episode Folder** shows the folder in Finder, and the button next to **Automations…** opens what the automations started: the Claude or ChatGPT conversation, or, for a command, what it's doing (**Show Activity**).
 
 ### Several takes
 
@@ -138,7 +138,7 @@ Using ChatGPT or Codex? [ChatGPT and Codex](docs/chatgpt-and-codex.md) walks thr
    | **Webhook** | Zapier, Make, n8n, your own server, or any agent platform that starts from a webhook | The URL, plus a secret header if it needs one |
 
 2. Fill in what it asks for, and write what the agent should do under **Instructions**.
-3. Click **Test**. The agent gets a test message saying there's nothing to work on, so it just replies. For commands and Shortcuts, **Open Log** shows what happened.
+3. Click **Test**. The agent gets a test message saying there's nothing to work on, so it just replies. For Claude Code and Codex, the reply shows next to **Test**, and **Show Activity** shows each step.
 4. Under **Runs for**, tick the shows that should use it, then click **Save**. You can also change this in **Edit Presets… → Automations**.
 
 > [!IMPORTANT]
@@ -172,7 +172,7 @@ The command-line templates start from these commands, which you can change:
 | Codex | `codex exec --skip-git-repo-check --sandbox workspace-write -` |
 | Gemini CLI | `gemini --approval-mode yolo -p "Follow the instructions above."` |
 
-To work in DaVinci Resolve, a command-line agent needs its own connection to Resolve, such as a Resolve MCP server set up in that agent. Without one, it can only work with the files in the episode folder. For Codex, see [Let Codex work in DaVinci Resolve](docs/chatgpt-and-codex.md#2-optional-let-codex-work-in-davinci-resolve).
+To work in DaVinci Resolve, a command-line agent needs its own connection to Resolve. DaVinci Resolve Studio 21.1 and later sets that up for Claude Code and Codex: in Resolve, choose **File → Setup AI Assistants**. Without a connection, the agent can only work with the files in the episode folder. For Codex, see also [Let Codex work in DaVinci Resolve](docs/chatgpt-and-codex.md#2-optional-let-codex-work-in-davinci-resolve).
 
 > [!WARNING]
 > Commands run with your Mac user's permissions, and these templates tell the agent to work without asking before each step. Only add commands you trust.
@@ -183,7 +183,18 @@ To work in DaVinci Resolve, a command-line agent needs its own connection to Res
 - By default only after a run with no problems, and only once per episode, so running the same episode again doesn't start it twice. Both are settings on each automation (**Only after a run with no problems**, **Only once per episode**).
 - **Run → Run an Automation** starts any automation by hand for the last finished run.
 
-Commands and Shortcuts run in the background, even after you quit Episode Kickoff, and keep your Mac awake while they run. If the app is open when one finishes, you get a notification.
+Commands and Shortcuts run in the background, even after you quit Episode Kickoff, and keep your Mac awake while they run. If the app is open when one finishes, you get a notification; for Claude Code and Codex, it includes the first line of the agent's answer.
+
+### Watch what it's doing
+
+**File → Automation Activity…**, or **Show Activity** next to **Automations…** after a run, lists the recent command and Shortcut runs and follows the one you pick while it works.
+
+- **Claude Code** (`claude -p …`) and **Codex** (`codex exec …`) show each step: what the agent says, every tool it uses (for example `DaVinci Resolve · run_script`), the commands it runs, the files it changes, anything that went wrong, and its final answer at the end. Episode Kickoff adds the option that makes them report their steps (`--output-format stream-json` for Claude Code, `--json` for Codex); a command with pipes, or one that already sets its output format, runs exactly as written.
+- Other commands and Shortcuts show what they print.
+- **Stop** ends a run that's going the wrong way. What it already did stays done.
+- **Show Raw Log** opens the full log, and **Open Episode Folder** shows the episode in Finder.
+
+This needs Episode Kickoff 0.0.7 or later.
 
 Tokens and other secrets are kept in your Mac's Keychain. Automations stay on your Mac: they're never exported with presets, so a preset someone sends you can't bring a command with it.
 
@@ -216,6 +227,10 @@ You can check any time with **Check for Updates** on the About tab or **Help →
 > [!IMPORTANT]
 > Updates only work when Episode Kickoff is in your Applications folder, not when it's opened straight from the installer disk.
 
+### If the About tab shows 1.x
+
+Versions were renumbered: 1.0.0 to 1.3.5 are now 0.0.1 to 0.0.6, and 0.0.7 comes after them. A copy that shows 1.x counts itself as newer than 0.0.7, so it won't offer the update. Install the [latest version](https://github.com/Artemis-AV/episode-kickoff/releases/latest) once, the same way as the first time (see [Install](#install)), and choose **Replace** when asked. Your shows, keys and sign-in stay as they are. macOS may ask you to allow the app again (Install, step 3). After that, updates arrive as usual.
+
 ## Where your data lives
 
 | What | Where |
@@ -239,8 +254,9 @@ Episode Kickoff has no account and no analytics. It connects to Riverside to get
   xattr -dr com.apple.quarantine "/Applications/Episode Kickoff.app"
   ```
 
-- **An automation didn't start**: the log in the main window says why, and **Test** in **File → Automations…** tries it on its own. If a command isn't found, use its full path (in Terminal, `which claude` shows it). Claude and ChatGPT limit how many runs they start in an hour.
+- **An automation didn't start, or stopped early**: the log in the main window says why, **File → Automation Activity…** shows what a command did, and **Test** in **File → Automations…** tries it on its own. If a command isn't found, use its full path (in Terminal, `which claude` shows it). Claude and ChatGPT limit how many runs they start in an hour.
 - **An update didn't install**: look in `~/Library/Logs/Episode Kickoff/update.log`, and make sure the app is in your Applications folder.
+- **The About tab shows 1.x and no update appears**: versions were renumbered, so install the latest version once. See [If the About tab shows 1.x](#if-the-about-tab-shows-1x).
 - **Logs**: **File → Open Logs Folder**. **Help → Show detailed log** adds more detail to the log in the window.
 
 ## Command line
