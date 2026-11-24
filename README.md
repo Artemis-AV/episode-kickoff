@@ -122,6 +122,8 @@ Riverside makes a separate recording for each take, and Take 1 is the one record
 
 An automation hands each finished episode to an agent or service. For example, Claude builds a rough cut in the new Resolve project, Codex writes show notes into the episode folder, or a webhook tells your team through Zapier.
 
+Using ChatGPT or Codex? [ChatGPT and Codex](docs/chatgpt-and-codex.md) walks through each way to set them up, step by step.
+
 ### Set one up
 
 1. Click **Automations…** in the main window (or **File → Automations…**), then **New**, and pick a type:
@@ -167,7 +169,7 @@ The command-line templates start from these commands, which you can change:
 | Codex | `codex exec --skip-git-repo-check --sandbox workspace-write -` |
 | Gemini CLI | `gemini --approval-mode yolo -p "Follow the instructions above."` |
 
-To work in DaVinci Resolve, a command-line agent needs its own connection to Resolve, such as a Resolve MCP server set up in that agent. Without one, it can only work with the files in the episode folder.
+To work in DaVinci Resolve, a command-line agent needs its own connection to Resolve, such as a Resolve MCP server set up in that agent. Without one, it can only work with the files in the episode folder. For Codex, see [Let Codex work in DaVinci Resolve](docs/chatgpt-and-codex.md#2-optional-let-codex-work-in-davinci-resolve).
 
 > [!WARNING]
 > Commands run with your Mac user's permissions, and these templates tell the agent to work without asking before each step. Only add commands you trust.
